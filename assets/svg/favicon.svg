@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" fill="none">
+  <defs>
+    <linearGradient id="goldFav" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCEAB3"/>
+      <stop offset="50%" stop-color="#E5BE60"/>
+      <stop offset="100%" stop-color="#AA771C"/>
+    </linearGradient>
+    <linearGradient id="redFav" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E13E28"/>
+      <stop offset="100%" stop-color="#BA2B18"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer Scalloped Red Stamp Frame -->
+  <rect x="2" y="2" width="60" height="60" rx="6" fill="url(#redFav)"/>
+  <!-- Scallop punches -->
+  <circle cx="10" cy="2" r="3" fill="#FAF6EE"/><circle cx="22" cy="2" r="3" fill="#FAF6EE"/><circle cx="34" cy="2" r="3" fill="#FAF6EE"/><circle cx="46" cy="2" r="3" fill="#FAF6EE"/><circle cx="58" cy="2" r="3" fill="#FAF6EE"/>
+  <circle cx="10" cy="62" r="3" fill="#FAF6EE"/><circle cx="22" cy="62" r="3" fill="#FAF6EE"/><circle cx="34" cy="62" r="3" fill="#FAF6EE"/><circle cx="46" cy="62" r="3" fill="#FAF6EE"/><circle cx="58" cy="62" r="3" fill="#FAF6EE"/>
+  <circle cx="2" cy="14" r="3" fill="#FAF6EE"/><circle cx="2" cy="26" r="3" fill="#FAF6EE"/><circle cx="2" cy="38" r="3" fill="#FAF6EE"/><circle cx="2" cy="50" r="3" fill="#FAF6EE"/>
+  <circle cx="62" cy="14" r="3" fill="#FAF6EE"/><circle cx="62" cy="26" r="3" fill="#FAF6EE"/><circle cx="62" cy="38" r="3" fill="#FAF6EE"/><circle cx="62" cy="50" r="3" fill="#FAF6EE"/>
+  
+  <!-- Gold Inset Field -->
+  <rect x="8" y="8" width="48" height="48" rx="3" fill="url(#goldFav)" stroke="#9E6E1A" stroke-width="0.75"/>
+  <rect x="15" y="15" width="34" height="34" rx="2" fill="#FAF6EE" stroke="#BA2B18" stroke-width="1.2"/>
+  <text x="32" y="39" font-family="'Fraunces', Georgia, serif" font-size="20" font-weight="700" fill="#BA2B18" text-anchor="middle">AG</text>
+</svg>

@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 90" width="460" height="90" fill="none" class="brand-logo-svg" role="img" aria-label="Antoinette Gardens Logo">
+  <defs>
+    <!-- Metallic Gold Gradient -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE8AC"/>
+      <stop offset="25%" stop-color="#E2B857"/>
+      <stop offset="50%" stop-color="#FFF3D4"/>
+      <stop offset="75%" stop-color="#C59232"/>
+      <stop offset="100%" stop-color="#9C6B16"/>
+    </linearGradient>
+
+    <!-- Deep Warm Gold for Linework & Borders -->
+    <linearGradient id="goldDark" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C59232"/>
+      <stop offset="50%" stop-color="#E2B857"/>
+      <stop offset="100%" stop-color="#9C6B16"/>
+    </linearGradient>
+
+    <!-- Vibrant Royal Terracotta Red for Stamp -->
+    <linearGradient id="stampRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E53925"/>
+      <stop offset="100%" stop-color="#B82613"/>
+    </linearGradient>
+
+    <!-- Stamp Perforations Mask (Fully Transparent Cutouts) -->
+    <mask id="stampMask">
+      <rect x="0" y="0" width="76" height="80" rx="3" fill="#FFFFFF"/>
+      <g fill="#000000">
+        <!-- Top Edge Perforations -->
+        <circle cx="8" cy="0" r="3.2"/><circle cx="19" cy="0" r="3.2"/><circle cx="30" cy="0" r="3.2"/><circle cx="41" cy="0" r="3.2"/><circle cx="52" cy="0" r="3.2"/><circle cx="63" cy="0" r="3.2"/>
+        <!-- Bottom Edge Perforations -->
+        <circle cx="8" cy="80" r="3.2"/><circle cx="19" cy="80" r="3.2"/><circle cx="30" cy="80" r="3.2"/><circle cx="41" cy="80" r="3.2"/><circle cx="52" cy="80" r="3.2"/><circle cx="63" cy="80" r="3.2"/>
+        <!-- Left Edge Perforations -->
+        <circle cx="0" cy="11" r="3.2"/><circle cx="0" cy="22.5" r="3.2"/><circle cx="0" cy="34" r="3.2"/><circle cx="0" cy="45.5" r="3.2"/><circle cx="0" cy="57" r="3.2"/><circle cx="0" cy="68.5" r="3.2"/>
+        <!-- Right Edge Perforations -->
+        <circle cx="76" cy="11" r="3.2"/><circle cx="76" cy="22.5" r="3.2"/><circle cx="76" cy="34" r="3.2"/><circle cx="76" cy="45.5" r="3.2"/><circle cx="76" cy="57" r="3.2"/><circle cx="76" cy="68.5" r="3.2"/>
+      </g>
+    </mask>
+  </defs>
+
+  <!-- ========================================================
+       1. ROYAL CREST / CARTOUCHE (x=5, y=5, w=76, h=80)
+       ======================================================== -->
+  <g class="crest-group" transform="translate(5, 5)">
+    <!-- Soft Drop Shadow Underneath Crest -->
+    <rect x="1" y="2" width="76" height="80" rx="3" fill="#231510" opacity="0.12"/>
+
+    <!-- Outer Red Scalloped Postage-Stamp Frame with Real Cutouts -->
+    <rect x="0" y="0" width="76" height="80" rx="3" fill="url(#stampRed)" mask="url(#stampMask)"/>
+
+    <!-- Inner Metallic Gold Field -->
+    <rect x="6" y="6" width="64" height="68" rx="2" fill="url(#goldGrad)" stroke="#9C6B16" stroke-width="0.8"/>
+
+    <!-- Baroque Filigree Ornamentation -->
+    <!-- Top Classical Urn / Pedestal -->
+    <path d="M30 11 H46 L44 14 H32 Z" fill="#9C6B16"/>
+    <ellipse cx="38" cy="10" rx="5" ry="1.8" fill="#B82613"/>
+    <path d="M26 15 C32 12.5 44 12.5 50 15 C46 16.8 30 16.8 26 15Z" fill="#B82613"/>
+
+    <!-- Left Pinecone / Hop Motif -->
+    <path d="M12 24 C16 28 16 38 12 44 C8 38 8 28 12 24Z" fill="#B82613" opacity="0.85"/>
+    <line x1="8" y1="34" x2="16" y2="34" stroke="#9C6B16" stroke-width="0.8"/>
+    <line x1="9.5" y1="29" x2="14.5" y2="29" stroke="#9C6B16" stroke-width="0.8"/>
+    <line x1="9.5" y1="39" x2="14.5" y2="39" stroke="#9C6B16" stroke-width="0.8"/>
+
+    <!-- Right Pinecone / Hop Motif -->
+    <path d="M64 24 C68 28 68 38 64 44 C60 38 60 28 64 24Z" fill="#B82613" opacity="0.85"/>
+    <line x1="60" y1="34" x2="68" y2="34" stroke="#9C6B16" stroke-width="0.8"/>
+    <line x1="61.5" y1="29" x2="66.5" y2="29" stroke="#9C6B16" stroke-width="0.8"/>
+    <line x1="61.5" y1="39" x2="66.5" y2="39" stroke="#9C6B16" stroke-width="0.8"/>
+
+    <!-- Bottom Acanthus Scrolls -->
+    <path d="M20 62 C26 56 32 64 38 60 C44 64 50 56 56 62 C50 67 26 67 20 62Z" fill="#B82613" opacity="0.9"/>
+    <circle cx="26" cy="65" r="2.2" fill="#9C6B16"/>
+    <circle cx="50" cy="65" r="2.2" fill="#9C6B16"/>
+    <circle cx="38" cy="66.5" r="1.8" fill="#B82613"/>
+
+    <!-- Central Gold Inset Frame -->
+    <rect x="20" y="21" width="36" height="36" rx="1.5" fill="#FAF6EE" stroke="#B82613" stroke-width="1.3"/>
+    <rect x="22.5" y="23.5" width="31" height="31" fill="none" stroke="#C59232" stroke-width="0.75" stroke-dasharray="1 1"/>
+
+    <!-- Serif Monogram "AG" in Red -->
+    <text x="38" y="47" font-family="'Fraunces', 'Playfair Display', Georgia, serif" font-size="20" font-weight="700" fill="#B82613" text-anchor="middle" letter-spacing="0.5">AG</text>
+  </g>
+
+  <!-- ========================================================
+       2. BRAND TYPOGRAPHY (High-Contrast Espresso with Gold)
+       ======================================================== -->
+  <g class="brand-text-group" transform="translate(98, 13)">
+    
+    <!-- Primary Name: ANTOINETTE GARDENS in High-Contrast Deep Roasted Espresso -->
+    <text x="0" y="37" font-family="'Fraunces', 'Playfair Display', 'Cinzel', Georgia, serif" font-size="29" font-weight="700" fill="#231510" letter-spacing="0.05em">
+      ANTOINETTE GARDENS
+    </text>
+
+    <!-- Subtitle: GUEST HOUSE & OUTDOOR LOUNGE • PORT HARCOURT (Valid XML numeric entity &#8226;) -->
+    <text x="1" y="55" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="8.5" font-weight="800" fill="#BA3D2A" letter-spacing="0.24em">
+      GUEST HOUSE &amp; OUTDOOR LOUNGE &#8226; PORT HARCOURT
+    </text>
+
+    <!-- Gold Accent Underline Bar matching attached brand signage -->
+    <rect x="0" y="63" width="350" height="3.5" rx="1.75" fill="url(#goldGrad)"/>
+    <rect x="0" y="68" width="145" height="1.2" rx="0.6" fill="#BA3D2A" opacity="0.8"/>
+  </g>
+</svg>

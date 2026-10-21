@@ -1,0 +1,2223 @@
+/* ==========================================================================
+   ANTOINETTE GARDENS AND GUEST HOUSE SERVICES — HIGH-FIDELITY STYLESHEET
+   Reference: "Drizzle" Culinary Editorial Landing Page (Warm Cream, Deep Chocolate, Poppy Terracotta)
+   Audience: Nigeria (Fast, Responsive, Accessible, Mobile-first performance)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. DESIGN TOKENS (:root)
+   -------------------------------------------------------------------------- */
+:root {
+  /* Exact Colors Sampled from Drizzle Reference */
+  --color-bg: #FAF6EE;               /* Luxurious Buttermilk Warm Cream */
+  --color-bg-card: #F2ECE0;          /* Warm Tinted Card Surface */
+  --color-surface-white: #FFFFFF;    /* Crisp White for Polaroid Cards & Inputs */
+  --color-dark: #231510;             /* Deep Roasted Chocolate Espresso */
+  --color-dark-deep: #160D08;        /* Ultra Deep Espresso (Gallery & Footer) */
+  --color-text-main: #231510;        /* Roasted Espresso Heading & Primary Text */
+  --color-text-muted: #5C4E44;       /* Warm Secondary Body (WCAG AAA compliant: 8.4:1) */
+  --color-text-subtle: #78695E;      /* Captions, Dates, Small Meta (WCAG AA: 4.8:1) */
+  --color-text-light: #FAF6EE;       /* Cream Text on Dark Surfaces */
+  --color-primary: #BA3D2A;          /* Signature Poppy Terracotta Rust Red */
+  --color-primary-hover: #9E2F1E;    /* Darkened Terracotta Hover */
+  --color-primary-text: #962817;     /* High-contrast Red for Text on Cream (WCAG AA: 5.4:1) */
+  --color-border: #E2D9CC;           /* Crisp Neutral Divider Borders */
+  --color-border-dark: rgba(250, 246, 238, 0.15); /* Borders on Dark Surfaces */
+  --color-gold: #D69E3D;             /* Star Rating Gold Accent */
+
+  /* Appetizing Culinary Typography Tokens */
+  --font-display: 'DM Serif Display', 'Fraunces', Georgia, serif;
+  --font-editorial: 'Fraunces', 'DM Serif Display', Georgia, serif;
+  --font-hand: 'Caveat', 'Playpen Sans', cursive;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Sizing & Spacing */
+  --space-xs: 0.5rem;    /* 8px */
+  --space-sm: 0.75rem;   /* 12px */
+  --space-md: 1.25rem;   /* 20px */
+  --space-lg: 2rem;      /* 32px */
+  --space-xl: 3.5rem;    /* 56px */
+  --space-2xl: 5.5rem;   /* 88px */
+  --space-3xl: 7.5rem;   /* 120px */
+
+  /* Radii */
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 26px;
+  --radius-xl: 36px;
+  --radius-pill: 9999px;
+
+  /* Shadows */
+  --shadow-subtle: 0 4px 18px -2px rgba(35, 21, 16, 0.05);
+  --shadow-card: 0 10px 30px -4px rgba(35, 21, 16, 0.07);
+  --shadow-hover: 0 18px 40px -6px rgba(35, 21, 16, 0.13);
+  --shadow-polaroid: 0 16px 36px rgba(0, 0, 0, 0.28);
+  --shadow-btn: 0 8px 22px rgba(186, 61, 42, 0.32);
+
+  /* Container */
+  --container-max: 1360px;
+  --container-pad: 1.75rem;
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. RESET & BASE STYLES
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+/* Lenis Recommended Rules (zero lag, snappy desktop scroll) */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none !important;
+}
+
+/* Section scroll-margin-top for sticky header with safe area */
+section[id], footer[id] {
+  scroll-margin-top: calc(84px + env(safe-area-inset-top, 0px));
+}
+
+body {
+  line-height: 1.6;
+  font-size: 1rem;
+  background-color: var(--color-bg);
+  color: var(--color-text-main);
+  overflow-x: hidden;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+img, picture, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button, input, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+/* Accessibility: Skip Link */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  background: var(--color-primary);
+  color: #FFFFFF;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  z-index: 99999;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 1rem;
+  outline: 3px solid var(--color-text-main);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+/* --------------------------------------------------------------------------
+   3. TYPOGRAPHY SYSTEM (Appetizing Culinary Design Language)
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--color-text-main);
+  letter-spacing: -0.015em;
+}
+
+h1 {
+  font-size: clamp(2.75rem, 6.4vw, 5.5rem);
+  line-height: 1.04;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: clamp(2rem, 4.4vw, 3.5rem);
+  line-height: 1.12;
+  font-weight: 400;
+}
+
+h3 {
+  font-size: clamp(1.4rem, 2.5vw, 2.1rem);
+  line-height: 1.25;
+  font-weight: 400;
+}
+
+h4 {
+  font-size: 1.25rem;
+  line-height: 1.35;
+  font-weight: 400;
+}
+
+/* Culinary Handwritten Accents & Chef Notes */
+.chef-script-tag {
+  font-family: var(--font-hand);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1.1;
+  display: inline-block;
+  letter-spacing: -0.01em;
+}
+
+.hero-culinary-tagline {
+  font-family: var(--font-hand);
+  font-size: clamp(1.25rem, 2.5vw, 1.65rem);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.01em;
+  display: block;
+}
+
+p {
+  color: var(--color-text-muted);
+}
+
+/* Pill Badges (Exact Reference Style: bordered pill with bolded keywords) */
+.pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 1.1rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  font-family: var(--font-sans);
+  font-size: 0.78125rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-text-main);
+  width: fit-content;
+}
+
+.pill-badge strong {
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.pill-badge.on-dark {
+  border-color: rgba(250, 246, 238, 0.25);
+  color: var(--color-text-light);
+}
+.pill-badge.on-dark strong {
+  color: #FFFFFF;
+}
+
+.pill-badge.terracotta {
+  border-color: rgba(186, 61, 42, 0.35);
+  color: var(--color-primary-text);
+  background: rgba(186, 61, 42, 0.06);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.85rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  min-height: 48px; /* Touch target >= 44px */
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-btn);
+}
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(186, 61, 42, 0.42);
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-text-main);
+}
+.btn-outline:hover {
+  border-color: var(--color-text-main);
+  background: rgba(35, 21, 16, 0.04);
+}
+
+/* --------------------------------------------------------------------------
+   4. HEADER & NAVIGATION (Reference Segmented Boxed Bar)
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(250, 246, 238, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+  border-top: 1px solid var(--color-border);
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* Segmented Grid Layout matching Drizzle Screenshot */
+.header-segmented-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) 1.5fr repeat(3, 1fr);
+  align-items: stretch;
+  width: 100%;
+}
+
+.nav-segment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.15rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-main);
+  border-right: 1px solid var(--color-border);
+  position: relative;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.nav-segment:first-child {
+  border-left: 1px solid var(--color-border);
+}
+.nav-segment:hover {
+  background: rgba(186, 61, 42, 0.05);
+  color: var(--color-primary);
+}
+
+/* Brand Wordmark & Logo (Center Box) */
+.nav-segment.brand-box {
+  padding-inline: 1rem;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-segment.brand-box:hover {
+  background: transparent;
+}
+
+.brand-title-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.brand-logo-img {
+  height: 48px;
+  width: auto;
+  max-width: 240px;
+  display: block;
+  object-fit: contain;
+  transition: transform var(--transition-fast);
+}
+.brand-title-wrap:hover .brand-logo-img {
+  transform: scale(1.02);
+}
+
+.brand-title-text {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 400;
+  color: var(--color-text-main);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.brand-title-text .dot {
+  color: var(--color-primary);
+}
+
+/* Mobile Nav Bar Top (Only visible <= 1024px) */
+.mobile-top-bar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem var(--container-pad);
+  min-height: 64px;
+}
+
+.mobile-top-bar .brand-logo-img {
+  height: 36px;
+  max-width: 190px;
+}
+
+.mobile-drawer-header .brand-logo-img {
+  height: 36px;
+  max-width: 190px;
+}
+
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-text-main);
+  z-index: 1010;
+}
+
+/* Mobile Drawer Overlay */
+.mobile-nav-drawer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 85%;
+  max-width: 360px;
+  height: 100vh;
+  height: 100dvh;
+  background: var(--color-bg);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.2);
+  z-index: 1020;
+  display: flex;
+  flex-direction: column;
+  padding: max(1.75rem, env(safe-area-inset-top, 0px)) 1.75rem max(1.75rem, env(safe-area-inset-bottom, 0px)) 1.75rem;
+  transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.mobile-nav-drawer.is-active {
+  right: 0;
+}
+
+.mobile-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(35, 21, 16, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1015;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.mobile-drawer-backdrop.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.drawer-close-btn {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-text-main);
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+.drawer-close-btn:active {
+  background: rgba(35, 21, 16, 0.08);
+}
+
+.mobile-nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  list-style: none;
+  margin-bottom: 2rem;
+}
+.mobile-nav-links a {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--color-text-main);
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+.mobile-nav-links a:hover,
+.mobile-nav-links a:active {
+  color: var(--color-primary);
+  background: rgba(186, 61, 42, 0.05);
+}
+
+.mobile-drawer-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* --------------------------------------------------------------------------
+   5. HERO SECTION (High-Impact Editorial Culinary Experience)
+   -------------------------------------------------------------------------- */
+.hero {
+  padding-top: clamp(2rem, 5vw, 4rem);
+  padding-bottom: clamp(3.5rem, 7vw, 6.5rem);
+  text-align: center;
+  position: relative;
+}
+
+/* Regal Brand Eyebrow with Royal AG Crest */
+.hero-heraldic-header {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.hero-crest-emblem {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(186, 61, 42, 0.25);
+  transition: transform 0.3s ease;
+}
+.hero-heraldic-header:hover .hero-crest-emblem {
+  transform: scale(1.1) rotate(-4deg);
+}
+
+.hero-heritage-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 1rem;
+  border-radius: var(--radius-pill);
+  background: rgba(186, 61, 42, 0.06);
+  border: 1px solid rgba(186, 61, 42, 0.25);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-primary-text);
+  text-transform: uppercase;
+}
+
+.hero-headline {
+  max-width: 1060px;
+  margin-inline: auto;
+  margin-bottom: 1.25rem;
+}
+
+.headline-serif-italic {
+  font-family: var(--font-editorial);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-primary);
+  display: inline-block;
+  padding-inline: 0.12em;
+  font-variation-settings: 'opsz' 144, 'ital' 1, 'WONK' 1;
+}
+
+.hero-sublead {
+  max-width: 720px;
+  margin-inline: auto;
+  margin-bottom: 2.75rem;
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  line-height: 1.65;
+  color: var(--color-text-muted);
+}
+
+/* Circular Poppy Terracotta Button Overlapping Hero Image */
+.hero-cta-anchor-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  z-index: 15;
+  margin-bottom: -54px; /* Exact reference half-overlap */
+}
+
+.circle-reserve-btn {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 16px 36px rgba(186, 61, 42, 0.42);
+  transition: transform var(--transition-bounce), background var(--transition-fast), box-shadow var(--transition-fast);
+  cursor: pointer;
+  border: 4px solid var(--color-bg);
+  position: relative;
+}
+.circle-reserve-btn::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(186, 61, 42, 0.45);
+  pointer-events: none;
+  animation: rotateRing 20s linear infinite;
+}
+@keyframes rotateRing {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.circle-reserve-btn:hover {
+  background-color: var(--color-primary-hover);
+  transform: scale(1.09) translateY(-4px);
+  box-shadow: 0 20px 45px rgba(186, 61, 42, 0.52);
+}
+
+.circle-reserve-btn svg {
+  margin-bottom: 3px;
+  transition: transform 0.25s ease;
+}
+.circle-reserve-btn:hover svg {
+  transform: translateY(4px);
+}
+
+.circle-reserve-btn span {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+/* Hero Image Container with Layered Frame */
+.hero-image-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 24px 60px -8px rgba(35, 21, 16, 0.2);
+  border: 1px solid var(--color-border);
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-bg-card);
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero-image-wrap:hover .hero-img {
+  transform: scale(1.025);
+}
+
+/* Subtle Gradient Overlay at bottom for contrast with chips */
+.hero-image-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(22, 13, 8, 0.15) 0%, rgba(22, 13, 8, 0) 40%, rgba(22, 13, 8, 0.65) 100%);
+  pointer-events: none;
+}
+
+/* Floating Glassmorphic Badges on Hero Image */
+.hero-floating-badge {
+  position: absolute;
+  z-index: 5;
+  background: rgba(250, 246, 238, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 217, 204, 0.95);
+  box-shadow: 0 10px 28px rgba(22, 13, 8, 0.18);
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-dark);
+  transition: transform 0.3s ease;
+}
+.hero-floating-badge:hover {
+  transform: translateY(-2px);
+}
+
+.hero-badge-top-left {
+  top: 1.75rem;
+  left: 1.75rem;
+}
+
+.hero-badge-top-right {
+  top: 1.75rem;
+  right: 1.75rem;
+}
+
+/* Green Pulse Status Indicator */
+.status-pulse-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #16A34A;
+  box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+  animation: livePulse 2s infinite;
+  flex-shrink: 0;
+}
+@keyframes livePulse {
+  0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+}
+
+/* Bottom Interactive Category Quick-Pills on Hero Image */
+.hero-quick-chips {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  z-index: 10;
+  flex-wrap: wrap;
+  width: 90%;
+  max-width: 780px;
+}
+
+.hero-quick-chip {
+  background: rgba(22, 13, 8, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #FFFFFF;
+  font-size: 0.78125rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+.hero-quick-chip:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   6. ABOUT SECTION ("Know About Us")
+   -------------------------------------------------------------------------- */
+.about {
+  padding-block: clamp(4rem, 7.5vw, 7rem);
+  border-top: 1px solid var(--color-border);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.18fr 0.82fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+
+.about-header-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.about-kicker {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-subtle);
+}
+.about-kicker strong {
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.about-headline {
+  margin-bottom: 1.5rem;
+}
+
+.about-desc {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  margin-bottom: 2.25rem;
+}
+
+.about-actions {
+  display: flex;
+  align-items: center;
+  gap: 2.25rem;
+  flex-wrap: wrap;
+}
+
+/* Satisfied Customers Stack */
+.reviews-pill-group {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.avatar-stack {
+  display: flex;
+  align-items: center;
+}
+
+.avatar-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-bg-card);
+  border: 2px solid var(--color-bg);
+  margin-left: -12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  overflow: hidden;
+}
+.avatar-circle:first-child {
+  margin-left: 0;
+}
+.avatar-circle.gold {
+  background: var(--color-gold);
+  color: #FFFFFF;
+}
+
+.reviews-meta {
+  display: flex;
+  flex-direction: column;
+}
+.reviews-meta strong {
+  font-size: 0.875rem;
+  color: var(--color-text-main);
+}
+.reviews-meta span {
+  font-size: 0.75rem;
+  color: var(--color-text-subtle);
+}
+
+.about-image-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-card);
+}
+.about-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   7. MENU CATEGORIES ("Your next favorite meal awaits")
+   -------------------------------------------------------------------------- */
+.menu-section {
+  padding-block: clamp(4rem, 7.5vw, 7rem);
+  background-color: var(--color-bg);
+}
+
+.menu-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 3.25rem;
+  flex-wrap: wrap;
+}
+
+.menu-title-group {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.menu-doodle-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--color-bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+}
+
+/* 4-Card Category Grid */
+.menu-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.menu-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.85rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 290px;
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+.menu-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Signature Deep Chocolate Card (Reference Match: "Vegan & Vegetarian" Card 3) */
+.menu-card.card-chocolate-dark {
+  background-color: var(--color-dark);
+  border-color: var(--color-dark);
+  color: #FFFFFF;
+}
+.menu-card.card-chocolate-dark h3,
+.menu-card.card-chocolate-dark p,
+.menu-card.card-chocolate-dark .menu-card-item {
+  color: #FFFFFF;
+}
+.menu-card.card-chocolate-dark .menu-card-subtitle {
+  color: rgba(250, 246, 238, 0.75);
+}
+.menu-card.card-chocolate-dark .menu-card-icon {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+}
+.menu-card.card-chocolate-dark .menu-items-list {
+  border-top-color: rgba(255, 255, 255, 0.2);
+}
+.menu-card.card-chocolate-dark .menu-card-price-badge {
+  background: rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+}
+
+.menu-card-top {
+  margin-bottom: 1.5rem;
+}
+
+.menu-card-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: rgba(186, 61, 42, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  margin-bottom: 1.25rem;
+}
+
+.menu-card-title {
+  margin-bottom: 0.45rem;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+}
+
+.menu-card-subtitle {
+  font-size: 0.875rem;
+  line-height: 1.45;
+  margin-bottom: 1.25rem;
+  font-family: var(--font-editorial);
+  font-style: italic;
+}
+
+.menu-items-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  border-top: 1px solid rgba(226, 217, 204, 0.85);
+  padding-top: 1.15rem;
+}
+.menu-card.card-chocolate-dark .menu-items-list {
+  border-top-color: rgba(255, 255, 255, 0.18);
+}
+
+.menu-card-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.dish-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.dish-name {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 400;
+  color: var(--color-text-main);
+  line-height: 1.25;
+}
+.card-chocolate-dark .dish-name {
+  color: #FFFFFF;
+}
+
+.dish-desc {
+  font-family: var(--font-hand);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-primary-text);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  padding-left: 1.2rem;
+}
+.card-chocolate-dark .dish-desc {
+  color: var(--color-gold);
+}
+
+.menu-item-num {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--color-primary);
+  margin-right: 0.15rem;
+}
+.menu-card.card-chocolate-dark .menu-item-num {
+  color: var(--color-gold);
+}
+
+.menu-card-price-badge {
+  margin-top: 1.25rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  padding: 0.35rem 0.95rem;
+  border-radius: var(--radius-pill);
+  background: rgba(35, 21, 16, 0.06);
+  width: fit-content;
+  color: var(--color-text-main);
+  border: 1px solid rgba(186, 61, 42, 0.15);
+}
+.menu-card.card-chocolate-dark .menu-card-price-badge {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+}
+
+/* --------------------------------------------------------------------------
+   8. LODGING & EVENT ROOMS (Reference: "Reserve your spot!")
+   -------------------------------------------------------------------------- */
+.lodge-section {
+  padding-block: clamp(4rem, 7.5vw, 7rem);
+  border-top: 1px solid var(--color-border);
+}
+
+.lodge-grid {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+.lodge-headline {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.lodge-desc {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.amenities-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2.25rem;
+}
+
+.amenity-tag {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-main);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Exact Reference Collage Layout: 2 top images side-by-side, 1 bottom image spanning wide */
+.lodge-collage-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.15rem;
+}
+
+.collage-item {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  aspect-ratio: 1 / 1;
+}
+
+.collage-item.span-wide {
+  grid-column: span 2;
+  aspect-ratio: 16 / 7;
+}
+
+.collage-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.collage-item:hover img {
+  transform: scale(1.04);
+}
+
+.collage-badge {
+  position: absolute;
+  bottom: 0.85rem;
+  left: 0.85rem;
+  background: rgba(22, 13, 8, 0.78);
+  backdrop-filter: blur(8px);
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+}
+
+/* --------------------------------------------------------------------------
+   9. TILTED POLAROID GALLERY (Reference: Dark Chocolate Canvas & White Polaroids)
+   -------------------------------------------------------------------------- */
+.gallery-section {
+  padding-block: clamp(4.5rem, 8vw, 8rem);
+  background-color: var(--color-dark-deep); /* Dramatic Dark Chocolate Canvas */
+  color: var(--color-text-light);
+  overflow: hidden;
+  text-align: center;
+  position: relative;
+}
+
+/* Background Subtle Food Doodle Pattern */
+.gallery-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+.gallery-header {
+  max-width: 720px;
+  margin-inline: auto;
+  margin-bottom: 3.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.gallery-headline {
+  margin-top: 1rem;
+  color: #FFFFFF;
+}
+
+.gallery-desc {
+  color: rgba(250, 246, 238, 0.7);
+  margin-top: 0.5rem;
+}
+
+/* Fanned Polaroid Gallery Track */
+.gallery-fanned-container {
+  width: 100%;
+  padding-block: 2.75rem;
+  position: relative;
+  z-index: 2;
+}
+
+.gallery-track {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem; /* Slight overlap for fanned cards effect */
+  padding-inline: 1.5rem;
+}
+
+/* White Crisp Polaroid Card */
+.polaroid-card {
+  flex: 0 0 210px;
+  background: var(--color-surface-white);
+  padding: 10px 10px 18px 10px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-polaroid);
+  transition: transform var(--transition-bounce), box-shadow var(--transition-fast), z-index 0s;
+  cursor: pointer;
+  position: relative;
+}
+
+.polaroid-img-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1.15;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #EFE8DD;
+  margin-bottom: 12px;
+}
+
+.polaroid-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.polaroid-label {
+  font-family: var(--font-hand);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1F1511;
+  text-transform: capitalize;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+/* Signature Alternating Rotations from Reference */
+.polaroid-card:nth-child(1) { transform: rotate(-8deg); }
+.polaroid-card:nth-child(2) { transform: rotate(-4deg); }
+.polaroid-card:nth-child(3) { transform: rotate(-1.5deg); }
+.polaroid-card:nth-child(4) { transform: rotate(2deg); }
+.polaroid-card:nth-child(5) { transform: rotate(5deg); }
+.polaroid-card:nth-child(6) { transform: rotate(9deg); }
+
+.polaroid-card:hover {
+  transform: scale(1.1) rotate(0deg) !important;
+  z-index: 25;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.45);
+}
+.polaroid-card:hover .polaroid-img-wrap img {
+  transform: scale(1.06);
+}
+
+/* --------------------------------------------------------------------------
+   10. POPPY TYPOGRAPHIC FEATURE BANNER (Reference: Stamped Tags & Line Doodles)
+   -------------------------------------------------------------------------- */
+.vibes-banner-section {
+  padding-block: clamp(4rem, 7vw, 6.5rem);
+  background-color: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Floating Sketchy Food Doodles */
+.doodle-float {
+  position: absolute;
+  color: rgba(186, 61, 42, 0.22);
+  pointer-events: none;
+}
+.doodle-1 { top: 12%; left: 8%; transform: rotate(-15deg); }
+.doodle-2 { top: 18%; right: 10%; transform: rotate(18deg); }
+.doodle-3 { bottom: 12%; left: 10%; transform: rotate(12deg); }
+.doodle-4 { bottom: 16%; right: 12%; transform: rotate(-22deg); }
+
+.vibes-banner-content {
+  max-width: 960px;
+  margin-inline: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.banner-statement {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.2vw, 3.4rem);
+  line-height: 1.32;
+  color: var(--color-text-main);
+  margin-bottom: 2.25rem;
+}
+
+/* Slanted Poppy Stamp Tags from Reference */
+.stamp-tag {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 0.22rem 0.65rem;
+  border-radius: 6px;
+  border: 1.5px solid var(--color-primary);
+  color: var(--color-primary-text);
+  background: var(--color-surface-white);
+  margin-inline: 0.35rem;
+  vertical-align: middle;
+  box-shadow: 0 3px 8px rgba(186, 61, 42, 0.15);
+}
+.stamp-tag.rotate-left { transform: rotate(-6deg); }
+.stamp-tag.rotate-right { transform: rotate(5deg); }
+.stamp-tag.rotate-mid { transform: rotate(-3deg); }
+
+/* --------------------------------------------------------------------------
+   11. CUSTOMER REVIEWS (Reference: Alternating Light & Dark Chocolate Card)
+   -------------------------------------------------------------------------- */
+.reviews-section {
+  padding-block: clamp(4rem, 8vw, 7.5rem);
+  background: var(--color-bg);
+}
+
+.reviews-header {
+  margin-bottom: 3.5rem;
+}
+
+.reviews-headline {
+  max-width: 720px;
+  margin-top: 1rem;
+}
+.reviews-headline em {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.reviews-cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.review-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 2.5rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 330px;
+  box-shadow: var(--shadow-subtle);
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+.review-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* Signature Deep Chocolate Center Card from Reference */
+.review-card.dark-contrast-card {
+  background-color: var(--color-dark);
+  border-color: var(--color-dark);
+  color: var(--color-text-light);
+}
+.review-card.dark-contrast-card .review-quote {
+  color: var(--color-text-light);
+}
+.review-card.dark-contrast-card .review-author-name {
+  color: #FFFFFF;
+}
+.review-card.dark-contrast-card .review-author-loc {
+  color: rgba(250, 246, 238, 0.65);
+}
+.review-card.dark-contrast-card .review-footer {
+  border-top-color: rgba(250, 246, 238, 0.15);
+}
+.review-card.dark-contrast-card .review-score-tag {
+  color: #FFFFFF;
+}
+
+.review-stars {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--color-gold);
+  margin-bottom: 1.25rem;
+}
+
+.review-quote {
+  font-family: var(--font-editorial);
+  font-size: 1.15rem;
+  line-height: 1.65;
+  font-style: italic;
+  font-variation-settings: 'opsz' 36, 'ital' 1;
+  color: var(--color-text-main);
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+.review-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(226, 217, 204, 0.85);
+  padding-top: 1.25rem;
+}
+
+.review-author-meta {
+  display: flex;
+  flex-direction: column;
+}
+.review-author-name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--color-text-main);
+  letter-spacing: -0.01em;
+}
+.review-author-loc {
+  font-size: 0.8125rem;
+  color: var(--color-text-subtle);
+}
+
+.review-score-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+/* --------------------------------------------------------------------------
+   12. RESERVATIONS & BOOKING CARD
+   -------------------------------------------------------------------------- */
+.booking-section {
+  padding-block: clamp(4rem, 8vw, 7rem);
+  background-color: var(--color-bg-card);
+  border-top: 1px solid var(--color-border);
+}
+
+.booking-card-wrap {
+  background: var(--color-surface-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: clamp(2rem, 5vw, 4rem);
+}
+
+.booking-header {
+  text-align: center;
+  max-width: 640px;
+  margin-inline: auto;
+  margin-bottom: 2.5rem;
+}
+.booking-header h2 {
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.booking-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.booking-tab-btn {
+  padding: 0.65rem 1.4rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  color: var(--color-text-main);
+}
+.booking-tab-btn.is-active,
+.booking-tab-btn:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #FFFFFF;
+}
+
+.booking-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.form-group.span-full {
+  grid-column: span 2;
+}
+
+.form-label {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--color-text-main);
+  text-transform: uppercase;
+}
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 0.85rem 1.15rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text-main);
+  font-size: 1rem; /* 16px minimum prevents iOS Safari auto-zoom */
+  scroll-margin-top: 100px;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(186, 61, 42, 0.15);
+  outline: none;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.booking-submit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.booking-assurance {
+  font-size: 0.8125rem;
+  color: var(--color-text-subtle);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* --------------------------------------------------------------------------
+   13. LOCATION & DIRECTIONS
+   -------------------------------------------------------------------------- */
+.location-section {
+  padding-block: clamp(4rem, 7.5vw, 6.5rem);
+  background: var(--color-bg);
+}
+
+.location-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.location-info-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.info-item {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+}
+
+.info-item-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(186, 61, 42, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.info-item-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-main);
+  margin-bottom: 0.25rem;
+}
+
+.info-item-desc {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.location-map-wrap {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  min-height: 380px;
+  background: var(--color-bg-card);
+}
+.location-map-wrap iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   14. FOOTER (Reference Match: Giant Typographic Branding & Newsletter Bar)
+   -------------------------------------------------------------------------- */
+.site-footer {
+  background-color: var(--color-dark-deep);
+  color: var(--color-text-light);
+  padding-top: clamp(4.5rem, 8vw, 7rem);
+  padding-bottom: 2.5rem;
+  border-top: 1px solid var(--color-border-dark);
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-top-row {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr 1.25fr;
+  gap: 3.5rem;
+  margin-bottom: 4rem;
+}
+
+.footer-brand-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 400;
+  color: #FFFFFF;
+  margin-bottom: 0.75rem;
+}
+.footer-brand-title .dot {
+  color: var(--color-primary);
+}
+
+.footer-brand-bio p {
+  color: rgba(250, 246, 238, 0.7);
+  font-size: 0.95rem;
+  max-width: 380px;
+  line-height: 1.6;
+}
+
+.footer-col-title {
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  margin-bottom: 1.25rem;
+}
+
+.footer-links-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.footer-links-list a {
+  color: rgba(250, 246, 238, 0.7);
+  font-size: 0.875rem;
+  transition: color var(--transition-fast);
+}
+.footer-links-list a:hover {
+  color: #FFFFFF;
+}
+
+/* Newsletter Input Pill Matching Reference */
+.footer-newsletter-wrap h4 {
+  color: #FFFFFF;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  margin-bottom: 0.35rem;
+}
+.footer-newsletter-wrap p {
+  color: rgba(250, 246, 238, 0.7);
+  font-size: 0.875rem;
+  margin-bottom: 1.25rem;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.newsletter-input {
+  flex: 1;
+  min-width: 220px;
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(250, 246, 238, 0.2);
+  background: rgba(250, 246, 238, 0.06);
+  color: #FFFFFF;
+  font-size: 1rem; /* 16px minimum prevents iOS Safari auto-zoom */
+  scroll-margin-top: 100px;
+}
+.newsletter-input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+.newsletter-input::placeholder {
+  color: rgba(250, 246, 238, 0.4);
+}
+
+.footer-subscribe-btn {
+  padding: 0.85rem 1.75rem;
+  font-size: 0.75rem;
+}
+
+/* Giant Typographic Brand Title across Footer Base (Reference: "DRIZZLE.") */
+.footer-giant-wordmark-wrap {
+  border-top: 1px solid var(--color-border-dark);
+  padding-top: 2rem;
+  margin-top: 2rem;
+  text-align: left;
+  overflow: hidden;
+  width: 100%;
+}
+
+.giant-footer-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 11vw, 10.5rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: #FFFFFF;
+  line-height: 0.9;
+  user-select: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+  max-width: 100%;
+}
+.giant-footer-title .dot {
+  color: var(--color-primary);
+}
+
+.footer-bottom-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 2.25rem;
+  font-size: 0.8125rem;
+  color: rgba(250, 246, 238, 0.55);
+  flex-wrap: wrap;
+}
+
+.footer-reg-badge {
+  font-size: 0.75rem;
+  color: rgba(250, 246, 238, 0.45);
+}
+
+/* --------------------------------------------------------------------------
+   15. TOAST NOTIFICATION
+   -------------------------------------------------------------------------- */
+.toast-notice {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--color-dark);
+  color: #FFFFFF;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  border-left: 4px solid var(--color-primary);
+  font-size: 0.875rem;
+  z-index: 9999;
+  transform: translateY(120%);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.toast-notice.show {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Mobile Sticky Bottom Action Bar — Hidden on Desktop and Tablets */
+@media (min-width: 769px) and (min-height: 501px) {
+  .mobile-bottom-action-bar {
+    display: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   16. RESPONSIVE BREAKPOINTS (Flawless Mobile & Tablet Polish)
+   -------------------------------------------------------------------------- */
+
+/* Tablet & Below (<= 1024px) */
+@media (max-width: 1024px) {
+  .header-segmented-bar {
+    display: none;
+  }
+  .mobile-top-bar {
+    display: flex;
+  }
+  .nav-toggle {
+    display: flex;
+  }
+
+  .about-grid, .lodge-grid, .location-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .menu-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .reviews-cards-row {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .footer-top-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+  .footer-newsletter-wrap {
+    grid-column: span 2;
+  }
+}
+
+/* Mobile Screens (<= 768px) */
+@media (max-width: 768px) {
+  :root {
+    --container-pad: 1.15rem;
+  }
+
+  /* Extra bottom padding on body so sticky action bar never overlaps content */
+  body {
+    padding-bottom: calc(60px + max(0.5rem, env(safe-area-inset-bottom, 0px)));
+  }
+
+  .hero {
+    padding-top: 1.75rem;
+    padding-bottom: 3rem;
+  }
+
+  .hero-headline {
+    margin-bottom: 2rem;
+  }
+
+  .hero-cta-anchor-wrap {
+    margin-bottom: -44px;
+  }
+
+  .circle-reserve-btn {
+    width: clamp(76px, 18vw, 92px);
+    height: clamp(76px, 18vw, 92px);
+  }
+  .circle-reserve-btn span {
+    font-size: 0.6rem;
+  }
+
+  .hero-image-wrap {
+    border-radius: var(--radius-md);
+    aspect-ratio: 4 / 3;
+  }
+
+  .hero-floating-badge {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.6875rem;
+  }
+  .hero-badge-top-left {
+    top: 0.75rem;
+    left: 0.75rem;
+    max-width: 58%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .hero-badge-top-right {
+    top: 0.75rem;
+    right: 0.75rem;
+    max-width: 40%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .hero-quick-chips {
+    bottom: 0.75rem;
+    gap: 0.35rem;
+    width: 96%;
+  }
+  .hero-quick-chip {
+    font-size: 0.6875rem;
+    padding: 0.35rem 0.65rem;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .menu-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lodge-collage-grid {
+    grid-template-columns: 1fr;
+  }
+  .collage-item.span-wide {
+    grid-column: auto;
+    aspect-ratio: 16 / 10;
+  }
+
+  /* Gallery Mobile Experience: Smooth Horizontal Swipe */
+  .gallery-fanned-container {
+    padding-block: 1rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-inline: 1.25rem;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+  .gallery-fanned-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-track {
+    justify-content: flex-start;
+    padding-inline: 0.5rem;
+    gap: 1rem;
+    width: max-content;
+  }
+
+  .polaroid-card {
+    flex: 0 0 175px;
+    scroll-snap-align: center;
+    transform: rotate(0deg) !important;
+  }
+  .polaroid-card:nth-child(even) {
+    transform: rotate(1.5deg) !important;
+  }
+  .polaroid-card:nth-child(odd) {
+    transform: rotate(-1.5deg) !important;
+  }
+
+  .booking-card-wrap {
+    padding: 1.75rem 1.25rem;
+    border-radius: var(--radius-md);
+  }
+
+  .booking-form {
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
+  }
+  .form-group.span-full {
+    grid-column: auto;
+  }
+
+  .booking-submit-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .booking-submit-row .btn {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .footer-top-row {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .footer-newsletter-wrap {
+    grid-column: auto;
+  }
+
+  .footer-bottom-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .giant-footer-title {
+    font-size: clamp(2.25rem, 13vw, 5rem);
+    white-space: normal;
+  }
+
+  /* Mobile Sticky Bottom Action Bar Active */
+  .mobile-bottom-action-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 990;
+    background: rgba(250, 246, 238, 0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--color-border);
+    box-shadow: 0 -4px 22px rgba(35, 21, 16, 0.08);
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    gap: 0.5rem;
+    padding: 0.5rem var(--container-pad) max(0.5rem, env(safe-area-inset-bottom, 0px)) var(--container-pad);
+  }
+
+  .bottom-action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    padding: 0.4rem 0.25rem;
+    min-height: 48px;
+    border-radius: var(--radius-sm);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    text-align: center;
+    text-decoration: none;
+    transition: transform var(--transition-fast), background var(--transition-fast);
+  }
+
+  .bottom-action-btn:active {
+    transform: scale(0.96);
+  }
+
+  .bottom-btn-call,
+  .bottom-btn-reserve {
+    background: rgba(35, 21, 16, 0.04);
+    color: var(--color-text-main);
+    border: 1px solid var(--color-border);
+  }
+
+  .bottom-btn-whatsapp {
+    background: var(--color-primary);
+    color: #FFFFFF;
+    box-shadow: 0 4px 14px rgba(186, 61, 42, 0.32);
+  }
+  .bottom-btn-whatsapp:active {
+    background: var(--color-primary-hover);
+  }
+
+  .bottom-btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bottom-btn-text {
+    line-height: 1;
+    white-space: nowrap;
+  }
+}
+
+/* Compact Mobile Screens (<= 414px / 390px / 360px) */
+@media (max-width: 414px) {
+  :root {
+    --container-pad: 0.95rem;
+  }
+
+  .hero-floating-badge {
+    font-size: 0.625rem;
+    padding: 0.25rem 0.5rem;
+  }
+  .hero-badge-top-left {
+    max-width: 55%;
+  }
+  .hero-badge-top-right {
+    max-width: 42%;
+  }
+
+  .polaroid-card {
+    flex: 0 0 155px;
+  }
+
+  .btn {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.78125rem;
+    min-height: 44px;
+  }
+}
+
+/* Ultra Narrow Screens (<= 320px — e.g. iPhone SE 1st gen / JioPhone) */
+@media (max-width: 320px) {
+  :root {
+    --container-pad: 0.75rem;
+  }
+
+  h1 {
+    font-size: 1.85rem;
+  }
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  .hero-badge-top-left {
+    top: 0.5rem;
+    left: 0.5rem;
+    max-width: 52%;
+  }
+  .hero-badge-top-right {
+    top: 0.5rem;
+    right: 0.5rem;
+    max-width: 45%;
+  }
+
+  .hero-quick-chips {
+    display: none; /* Hide dense chips on 320px to avoid visual clutter on small photo */
+  }
+
+  .circle-reserve-btn {
+    width: 72px;
+    height: 72px;
+  }
+  .circle-reserve-btn span {
+    font-size: 0.5rem;
+  }
+
+  .bottom-action-btn {
+    font-size: 0.625rem;
+    padding: 0.35rem 0.2rem;
+  }
+  .bottom-action-btn svg {
+    width: 17px;
+    height: 17px;
+  }
+}
+
+/* Mobile Landscape Orientation Safeguards (e.g. 667x375, 844x390) */
+@media (max-height: 500px) and (orientation: landscape) {
+  .site-header {
+    position: relative; /* In landscape, unfix header so it does not take up half the screen */
+  }
+  .mobile-top-bar {
+    min-height: 52px;
+    padding-block: 0.4rem;
+  }
+  .mobile-bottom-action-bar {
+    display: grid !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 990;
+    padding-block: 0.35rem;
+    gap: 0.35rem;
+  }
+  .bottom-action-btn {
+    min-height: 40px;
+    flex-direction: row;
+    gap: 0.35rem;
+  }
+  body {
+    padding-bottom: 56px;
+  }
+  .hero {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+  .circle-reserve-btn {
+    width: 70px;
+    height: 70px;
+    margin-bottom: -35px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   17. REDUCED MOTION PREFERENCE
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hero-img, .collage-item img, .polaroid-card, .btn {
+    transform: none !important;
+    transition: none !important;
+  }
+}
